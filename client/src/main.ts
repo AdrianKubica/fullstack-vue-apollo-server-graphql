@@ -10,11 +10,11 @@ import VueApollo from "vue-apollo"
 
 Vue.use(VueApollo)
 
-const defaultClient = new ApolloClient({
+const apolloClient = new ApolloClient({
   uri: "/graphql",
 })
 
-const apolloProvider = new VueApollo({ defaultClient })
+const apolloProvider = new VueApollo({ defaultClient: apolloClient })
 
 Vue.config.productionTip = false
 

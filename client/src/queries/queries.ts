@@ -7,6 +7,7 @@ export const postsQuery = gql`
       imageUrl
       categories
       description
+      likes
     }
   }
 `

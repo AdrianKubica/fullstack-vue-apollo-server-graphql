@@ -28,7 +28,8 @@ type Message {
 }
 
 type Mutation {
-  signupUser(username: String!, password: String!, email: String!): UserOutput
+  signinUser(username: String!, password: String!): Token!
+  signupUser(username: String!, password: String!, email: String!): Token!
   addPost(title: String!, imageUrl: String!, categories: [String!]!, description: String!, createdBy: ID!): Post!
 }
 
@@ -40,6 +41,10 @@ type UserOutput {
   favorites: [String!]!
   createdAt: String!
   updatedAt: String!
+}
+
+type Token {
+  token: String!
 }
 
 type PostOutput {

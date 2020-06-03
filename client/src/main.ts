@@ -10,7 +10,7 @@ import VueApollo from "vue-apollo"
 
 Vue.use(VueApollo)
 
-const apolloClient = new ApolloClient({
+export const apolloClient = new ApolloClient({
   uri: "/graphql",
 })
 

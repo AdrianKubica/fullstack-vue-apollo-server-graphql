@@ -1,8 +1,29 @@
-import { prop, buildSchema, addModelToTypegoose, arrayProp, Ref, DocumentType } from "@typegoose/typegoose"
+import { prop, buildSchema, addModelToTypegoose, arrayProp, Ref, DocumentType, pre } from "@typegoose/typegoose"
 import validator from "validator"
 import mongoose from "mongoose"
 import { Post } from "./Post"
+import { v4 as uuid } from "uuid"
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
+@pre<User>("save", function (next) {
+  const user = this
+  user.avatar = `http://gravatar.com/avatar/${uuid()}?d=identicon`
+  next()
+})
+@pre<User>("save", async function (next) {
+  const user = this
+  if (user.isModified("password")) {
+    try {
+      const salt = await bcrypt.genSalt(10)
+      user.password = await bcrypt.hash(user.password, salt)
+    } catch (err) {
+      return next(err)
+    }
+  }
+
+  next()
+})
 export class User {
   @prop({ required: true, unique: true })
   username!: string
@@ -49,6 +70,12 @@ export class User {
     required: true,
   })
   favorites!: Ref<Post>[]
+
+  public async generateAuthToken(this: DocumentType<User>, secret: string, expiresIn: string) {
+    const user = this
+    const token = jwt.sign({ id: user.id.toString() }, secret, { expiresIn })
+    return token
+  }
 }
 
 const userSchema = buildSchema(User, {

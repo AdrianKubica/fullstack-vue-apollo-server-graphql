@@ -2,3 +2,4 @@ db:
   MONGO_URL: mongodb://192.168.99.110/fullstack-vue-graphql
 app:
   PORT: 3000
+  SECRET: dnhasgf7aghfuiasf78gy8dfsa7gfysdf6g8f7sf

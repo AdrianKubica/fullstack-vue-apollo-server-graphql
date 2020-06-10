@@ -42,7 +42,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator"
-import { postsQuery } from "../queries/queries"
+import { GET_POSTS } from "../queries/queries"
 import store from "../store"
 import "vue-apollo"
 import { PostModule } from "../store/modules/posts"
@@ -50,7 +50,7 @@ import { PostModule } from "../store/modules/posts"
 @Component({
   apollo: {
     posts: {
-      query: postsQuery,
+      query: GET_POSTS,
       skip: true,
       result(args) {
         // console.log(args)
@@ -63,7 +63,7 @@ import { PostModule } from "../store/modules/posts"
 })
 export default class Home extends Vue {
   private posts = []
-  private query = postsQuery
+  private query = GET_POSTS
   private loading = false
 
   mounted() {
@@ -74,7 +74,7 @@ export default class Home extends Vue {
   // const results = await this.$apollo.queries.posts.refetch()
 
   async showData() {
-    const results = await this.$apollo.query({ query: postsQuery })
+    const results = await this.$apollo.query({ query: GET_POSTS })
     // console.log(results.data.posts)
     // console.log(PostModule.posts)
   }

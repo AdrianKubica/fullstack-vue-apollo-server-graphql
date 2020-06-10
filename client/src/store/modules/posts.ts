@@ -1,7 +1,7 @@
 import store from "@/store"
 import { Module, VuexModule, Mutation, Action, getModule } from "vuex-module-decorators"
 import { apolloClient } from "../../main"
-import { postsQuery } from "@/queries/queries"
+import { GET_POSTS } from "@/queries/queries"
 
 @Module({ dynamic: true, store, namespaced: true, name: "posts" })
 export default class Posts extends VuexModule {
@@ -15,7 +15,7 @@ export default class Posts extends VuexModule {
   @Action({ commit: "setPosts" })
   async getPosts() {
     const { data } = await apolloClient.query({
-      query: postsQuery,
+      query: GET_POSTS,
     })
     return data.posts
   }

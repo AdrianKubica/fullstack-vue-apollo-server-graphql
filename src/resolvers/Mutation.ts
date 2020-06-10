@@ -15,6 +15,7 @@ export const Mutation = {
     }
     return { token: user.generateAuthToken(secret, "1hr") }
   },
+
   async signupUser(parent: any, { username, password, email }: any, { UserModel }: any, info: any) {
     const user = await UserModel.findOne({ $or: [{ username }, { email }] })
     if (user) {
@@ -23,6 +24,7 @@ export const Mutation = {
     const newUser = await new UserModel({ username, password, email }).save()
     return { token: newUser.generateAuthToken(secret, "1hr") }
   },
+
   async addPost(
     parent: any,
     { title, imageUrl, categories, description, createdBy }: any,
